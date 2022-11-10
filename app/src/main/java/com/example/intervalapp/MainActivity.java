@@ -5,12 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
     int min = 2;
     int max = 15;
-
+    int isBlocked = 0;
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
 
     @Override
@@ -34,12 +35,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void determineInterval(){
         int numSemitones = ThreadLocalRandom.current().nextInt(min, max + 1);
-        //assume begin on middle C
+
         int numStart = 1;
         int diff = numSemitones - numStart;
 
+        btnText(diff);
+
+        Random random = new Random();
+        //if 0 play broken else play solid
+        isBlocked = random.nextInt(1);
+    }
+
+    private void btnText(int diff){
         String interval = intervalType.get(diff);
-        
+
+        int btn1Interval = ThreadLocalRandom.current().nextInt(1, 13);
+        int btn2Interval = ThreadLocalRandom.current().nextInt(1, 13);
+        int btn3Interval = ThreadLocalRandom.current().nextInt(1, 13);
+
+
+
 
     }
     private void makeSound(){
