@@ -73,26 +73,42 @@ public class MainActivity extends AppCompatActivity {
         interval = findViewById(R.id.callSound);
     }
 
-    private void determineInterval(){
+    private String determineInterval(){
         int numSemitones = ThreadLocalRandom.current().nextInt(min, max + 1);
 
         int numStart = 1;
         int diff = numSemitones - numStart;
 
-        question(diff);
+        return intervalType.get(diff);
 
-        Random random = new Random();
+
+        //Random random = new Random();
         //if 0 play broken else play solid
         //isBlocked = random.nextInt(1);
     }
 
-    private void question(int diff){
-        String interval = intervalType.get(diff);
+    public void question(){
+        String interval = determineInterval();
 
-        int btn1Interval = ThreadLocalRandom.current().nextInt(1, 13);
-        int btn2Interval = ThreadLocalRandom.current().nextInt(1, 13);
-        int btn3Interval = ThreadLocalRandom.current().nextInt(1, 13);
+        Random random = new Random();
 
+        int correctAnswerLocation = random.nextInt(4);
+
+        for(int i = 0; i < 4; i++){
+            if(i == correctAnswerLocation){
+                answers.add(interval);
+            }else{
+                int btnInterval = ThreadLocalRandom.current().nextInt(1, 13);
+                while(!answers.add(intervalType.get(btnInterval))){
+                    btnInterval = ThreadLocalRandom.current().nextInt(1, 13);
+                }
+            }
+        }
+
+        button1.setText(answers.get(0));
+        button2.setText(answers.get(1));
+        button3.setText(answers.get(2));
+        button4.setText(answers.get(3));
 
 
 
@@ -103,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void chooseAnswer(View view){
 
+        question();
     }
 
     public void createNewInterval(){
