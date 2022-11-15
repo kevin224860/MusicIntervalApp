@@ -2,6 +2,7 @@ package com.example.intervalapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     Button button3;
     Button button4;
 
-    Button interval;
+    //Button interval;
 
-    int locationOfAnswer;
+    int correctAnswerLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.answer3);
         button4 = findViewById(R.id.answer4);
 
-        interval = findViewById(R.id.callSound);
+        //interval = findViewById(R.id.callSound);
+        question();
     }
 
     private String determineInterval(){
@@ -87,12 +89,13 @@ public class MainActivity extends AppCompatActivity {
         //isBlocked = random.nextInt(1);
     }
 
+    @SuppressLint("ResourceType")
     public void question(){
         String interval = determineInterval();
 
         Random random = new Random();
 
-        int correctAnswerLocation = random.nextInt(4);
+        correctAnswerLocation = random.nextInt(4);
 
         for(int i = 0; i < 4; i++){
             if(i == correctAnswerLocation){
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+        //Log.i("Here:", interval);
         button1.setText(answers.get(0));
         button2.setText(answers.get(1));
         button3.setText(answers.get(2));
@@ -118,13 +121,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseAnswer(View view){
-
+        Log.i("Answer is chosen", "_____________________");
+        Log.i("Hello", String.valueOf(view.getTag()));
+        if(view.getTag().toString().equals(Integer.toString(correctAnswerLocation))){
+            Log.i("Answer:", "Correct");
+        }else{
+            Log.i("Answer:", "Wrong");
+        }
         question();
     }
 
     public void createNewInterval(){
         Random random = new Random();
-        locationOfAnswer = random.nextInt(4);
+        correctAnswerLocation = random.nextInt(4);
         determineInterval();
 
     }
