@@ -35,7 +35,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
     int min = 2;
-    int max = 15;
+    int max = 12;
     int isBlocked = 0;
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
     ArrayList<String> answers = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         String interval = determineInterval();
 
         Random random = new Random();
-
+        answers.clear();
         correctAnswerLocation = random.nextInt(4);
 
         for(int i = 0; i < 4; i++){
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        //Log.i("Here:", interval);
+
         button1.setText(answers.get(0));
         button2.setText(answers.get(1));
         button3.setText(answers.get(2));
