@@ -3,6 +3,7 @@ package com.example.intervalapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     int max = 12;
     int isBlocked = 0;
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
+    HashMap<Integer, String> pianoKeys = new HashMap<Integer, String>();
     ArrayList<String> answers = new ArrayList<String>();
 
     Button button1;
@@ -48,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
     //Button interval;
 
     int correctAnswerLocation;
+
+    MediaPlayer noteSound;
+
+    int numInterval;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
         intervalType.put(11, "Major Seventh");
         intervalType.put(12, "Octave");
 
+        //all possible keys
+        pianoKeys.put(0, "C");
+        pianoKeys.put(1, "C#");
+        pianoKeys.put(2, "D");
+        pianoKeys.put(3, "D#");
+        pianoKeys.put(4, "E");
+        pianoKeys.put(5, "F");
+        pianoKeys.put(6, "F#");
+        pianoKeys.put(7, "G");
+        pianoKeys.put(8, "G#");
+        pianoKeys.put(9, "A");
+        pianoKeys.put(10, "A#");
+        pianoKeys.put(11, "B");
+        pianoKeys.put(12, "high_C");
+
+
         button1 = findViewById(R.id.answer1);
         button2 = findViewById(R.id.answer2);
         button3 = findViewById(R.id.answer3);
@@ -75,23 +98,32 @@ public class MainActivity extends AppCompatActivity {
         question();
     }
 
-    private String determineInterval(){
+    private int determineInterval(){
         int numSemitones = ThreadLocalRandom.current().nextInt(min, max + 1);
 
         int numStart = 1;
         int diff = numSemitones - numStart;
 
-        return intervalType.get(diff);
+        return diff;
 
-
-        //Random random = new Random();
-        //if 0 play broken else play solid
-        //isBlocked = random.nextInt(1);
     }
 
+    private String[] arrInterval(int n){
+        String[] arr = new String[2];
+
+        arr[0] = "C";
+
+        arr[1] = pianoKeys.get(n);
+
+
+        return arr;
+    }
     @SuppressLint("ResourceType")
     public void question(){
-        String interval = determineInterval();
+        numInterval = determineInterval();
+        String interval =  intervalType.get(numInterval);
+
+
 
         Random random = new Random();
         answers.clear();
@@ -116,8 +148,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     public void makeSound(View view){
-        Log.i("Play sound", "");
+        String[] intervalArr = arrInterval(numInterval);
+        Log.i("Play sound", intervalArr[0]);
+        Log.i("Play sound", intervalArr[1]);
+        //noteSound.start();
     }
 
     public void chooseAnswer(View view){
