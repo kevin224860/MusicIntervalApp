@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
+import org.jfugue.player.Player;
 /*
  *Class structure
  *
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
     int numInterval;
 
+    String[] keyArr = {"c4", "csharp4", "d4", "dsharp4", "e4", "esharp4", "f4", "fsharp4", "g4", "gsharp4", "a4", "asharp4", "b4",
+            "c5", "csharp5", "d5", "dsharp5", "e5", "esharp5", "f5", "fsharp5", "g5", "gsharp5", "a5", "asharp5", "b5"};
+    String[] intervalArr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +113,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String[] arrInterval(int n){
+        // arr will have the notes for the interval
         String[] arr = new String[2];
+        // use a random integer to use and the index of keysArr
+        int randomInt;
+        Random random = new Random();
+        randomInt = random.nextInt(keyArr.length);
+        // with the keysArr and the random integer make sure that ranInt + n < keysArr.length()
+        while(keyArr.length < randomInt+n){
+            randomInt = random.nextInt(keyArr.length);
+        }
 
-        arr[0] = "C";
 
-        arr[1] = pianoKeys.get(n);
+        arr[0] = keyArr[randomInt];
+
+        arr[1] = keyArr[randomInt + n];
 
 
         return arr;
@@ -145,14 +159,19 @@ public class MainActivity extends AppCompatActivity {
         button3.setText(answers.get(2));
         button4.setText(answers.get(3));
 
-
+        intervalArr = arrInterval(numInterval);
 
     }
 
     public void makeSound(View view){
-        String[] intervalArr = arrInterval(numInterval);
+
+
         Log.i("Play sound", intervalArr[0]);
         Log.i("Play sound", intervalArr[1]);
+        String temp = "R.raw." + intervalArr[0];
+        MediaPlayer startNote = MediaPlayer.create(MainActivity.this, R.raw.g5);
+
+        startNote.start();
         //noteSound.start();
     }
 
