@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     String[] keyArr = {"c4", "csharp4", "d4", "dsharp4", "e4", "esharp4", "f4", "fsharp4", "g4", "gsharp4", "a4", "asharp4", "b4",
             "c5", "csharp5", "d5", "dsharp5", "e5", "esharp5", "f5", "fsharp5", "g5", "gsharp5", "a5", "asharp5", "b5"};
     String[] intervalArr;
+
+    TextView resultTextView;
+    Button nextButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.answer3);
         button4 = findViewById(R.id.answer4);
 
+
+        resultTextView = findViewById(R.id.resultText);
+        nextButton = findViewById(R.id.newQuestion);
         //interval = findViewById(R.id.callSound);
         question();
     }
@@ -180,12 +188,23 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Hello", String.valueOf(view.getTag()));
         if(view.getTag().toString().equals(Integer.toString(correctAnswerLocation))){
             Log.i("Answer:", "Correct");
+            resultTextView.setVisibility(View.VISIBLE);
+            resultTextView.setText("correct");
         }else{
             Log.i("Answer:", "Wrong");
+            String interval =  intervalType.get(numInterval);
+            resultTextView.setVisibility(View.VISIBLE);
+            resultTextView.setText("It was " + interval);
         }
-        question();
+        nextButton.setVisibility(View.VISIBLE);
+
     }
 
+    public void nextQuestion(View view){
+        resultTextView.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        question();
+    }
     public void createNewInterval(){
         Random random = new Random();
         correctAnswerLocation = random.nextInt(4);
