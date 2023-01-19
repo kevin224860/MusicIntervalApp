@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void makeSound(View view){
+    public void makeSound(View view) throws IOException {
 
 
         Log.i("Play sound", intervalArr[0]);
@@ -205,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
             resultTextView.setVisibility(View.VISIBLE);
             resultTextView.setText("It was " + interval);
         }
+        resultTextView.setVisibility(View.VISIBLE);
         nextButton.setVisibility(View.VISIBLE);
 
     }
