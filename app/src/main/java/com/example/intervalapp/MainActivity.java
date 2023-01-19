@@ -176,10 +176,19 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("Play sound", intervalArr[0]);
         Log.i("Play sound", intervalArr[1]);
-        String temp = "R.raw." + intervalArr[0];
-        MediaPlayer startNote = MediaPlayer.create(MainActivity.this, R.raw.g5);
 
+        //get the resource ids for the start and the end notes
+        int startNoteID = getResources().getIdentifier(intervalArr[0], "raw", getPackageName());
+        int endNoteID = getResources().getIdentifier(intervalArr[1], "raw", getPackageName());
+
+        //create the start and end note Media Player
+        MediaPlayer startNote = MediaPlayer.create(MainActivity.this, startNoteID);
+        MediaPlayer endNote = MediaPlayer.create(MainActivity.this, endNoteID);
+
+        //play the start and the end notes
         startNote.start();
+        endNote.start();
+
         //noteSound.start();
     }
 
