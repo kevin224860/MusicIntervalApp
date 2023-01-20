@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import org.jfugue.player.Player;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
     HashMap<Integer, String> pianoKeys = new HashMap<Integer, String>();
     ArrayList<String> answers = new ArrayList<String>();
+
+    String[] ansArr = new String[4];
 
     Button button1;
     Button button2;
@@ -147,20 +150,28 @@ public class MainActivity extends AppCompatActivity {
         String interval =  intervalType.get(numInterval);
 
 
-
+        HashSet<Integer> set = new HashSet<>();
         Random random = new Random();
         answers.clear();
         correctAnswerLocation = random.nextInt(4);
-
+        ansArr[correctAnswerLocation] = interval;
         for(int i = 0; i < 4; i++){
             if(i == correctAnswerLocation){
+                set.add(numInterval);
                 answers.add(interval);
             }else{
                 int btnInterval = ThreadLocalRandom.current().nextInt(1, 13);
-                while(!answers.add(intervalType.get(btnInterval))){
+                while(set.contains(btnInterval) || btnInterval == numInterval){
                     btnInterval = ThreadLocalRandom.current().nextInt(1, 13);
                 }
+                answers.add(intervalType.get(btnInterval));
+                set.add(btnInterval);
             }
+
+        }
+
+        for(int i = 0; i < 4; i++){
+            Log.i("answers:", answers.get(i));
         }
 
         button1.setText(answers.get(0));
