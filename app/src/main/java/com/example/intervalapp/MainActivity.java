@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import org.jfugue.player.Player;
+import com.example.intervalapp.Interval;
 /*
  *Class structure
  *
@@ -62,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
     int numInterval;
 
     String[] keyArr = {"c4", "csharp4", "d4", "dsharp4", "e4", "esharp4", "f4", "fsharp4", "g4", "gsharp4", "a4", "asharp4", "b4",
-            "c5", "csharp5", "d5", "dsharp5", "e5", "esharp5", "f5", "fsharp5", "g5", "gsharp5", "a5", "asharp5", "b5"};
+            "c5", "csharp5", "d5", "dsharp5", "e5", "f5", "fsharp5", "g5", "gsharp5", "a5", "asharp5", "b5"};
     String[] intervalArr;
 
     TextView resultTextView;
     Button nextButton;
 
+    Interval intervalObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,8 +149,9 @@ public class MainActivity extends AppCompatActivity {
     public void question(){
         numInterval = determineInterval();
         String interval =  intervalType.get(numInterval);
-
-
+        intervalArr = arrInterval(numInterval);
+        int played = ThreadLocalRandom.current().nextInt(0, 3);
+        intervalObj = new Interval(intervalArr, played);
         HashSet<Integer> set = new HashSet<>();
         Random random = new Random();
         answers.clear();
@@ -179,11 +181,11 @@ public class MainActivity extends AppCompatActivity {
         button3.setText(answers.get(2));
         button4.setText(answers.get(3));
 
-        intervalArr = arrInterval(numInterval);
+
 
     }
 
-    public void makeSound(View view) throws IOException {
+    public void makeSound(View view) throws IOException, InterruptedException {
 
 
         Log.i("Play sound", intervalArr[0]);
@@ -198,10 +200,30 @@ public class MainActivity extends AppCompatActivity {
         MediaPlayer endNote = MediaPlayer.create(MainActivity.this, endNoteID);
 
         //play the start and the end notes
-        startNote.start();
-        endNote.start();
+        switch (intervalObj.played){
+            // play interval
+            case 0:
+                startNote.start();
+                Thread.sleep(1000);
+                endNote.start();
+                break;
+            // play interval in reverse
+            case 1:
+                endNote.start();
+                Thread.sleep(1000);
+                startNote.start();
+                break;
+            // play interval solid
+            case 2:
+                startNote.start();
+                endNote.start();
+                break;
+            default:
+                Log.i("Error:", "intervalObj.play is out of bounds");
+        }
 
-        //noteSound.start();
+
+
     }
 
     public void chooseAnswer(View view){
