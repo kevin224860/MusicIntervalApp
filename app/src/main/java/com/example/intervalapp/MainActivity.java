@@ -18,30 +18,11 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import com.example.intervalapp.Interval;
-/*
- *Class structure
- *
- *
- *onCreate()
- *  created when the app is started
- *
- *question()
- *  creates a question
- *  needs to determine an interval, input it as one of the buttons which would be the answer, have 3 different intervals as incorrect answers
- *
- *chooseAnswer()
- *  user selects one of the buttons
- *  determine if user is correct in guessing the interval
- *  create new question, interval ect
- *
- *playInterval()
- *  method for the button to play the sound of the interval
- * */
 
 public class MainActivity extends AppCompatActivity {
     int min = 2;
     int max = 12;
-    int isBlocked = 0;
+
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
     HashMap<Integer, String> pianoKeys = new HashMap<Integer, String>();
     ArrayList<String> answers = new ArrayList<String>();
@@ -53,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
     Button button3;
     Button button4;
 
-    //Button interval;
+
 
     int correctAnswerLocation;
-
-    MediaPlayer noteSound;
 
     int numInterval;
 
@@ -87,21 +66,6 @@ public class MainActivity extends AppCompatActivity {
         intervalType.put(11, "Major Seventh");
         intervalType.put(12, "Octave");
 
-        //all possible keys
-        pianoKeys.put(0, "C");
-        pianoKeys.put(1, "C#");
-        pianoKeys.put(2, "D");
-        pianoKeys.put(3, "D#");
-        pianoKeys.put(4, "E");
-        pianoKeys.put(5, "F");
-        pianoKeys.put(6, "F#");
-        pianoKeys.put(7, "G");
-        pianoKeys.put(8, "G#");
-        pianoKeys.put(9, "A");
-        pianoKeys.put(10, "A#");
-        pianoKeys.put(11, "B");
-        pianoKeys.put(12, "high_C");
-
 
         button1 = findViewById(R.id.answer1);
         button2 = findViewById(R.id.answer2);
@@ -111,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         resultTextView = findViewById(R.id.resultText);
         nextButton = findViewById(R.id.newQuestion);
-        //interval = findViewById(R.id.callSound);
+
         question();
     }
 
@@ -249,13 +213,6 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setVisibility(View.INVISIBLE);
         question();
     }
-    public void createNewInterval(){
-        Random random = new Random();
-        correctAnswerLocation = random.nextInt(4);
-        determineInterval();
-
-    }
-
-
+    
 
 }
