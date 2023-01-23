@@ -20,22 +20,23 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.example.intervalapp.Interval;
 
 public class MainActivity extends AppCompatActivity {
+    //range of semitones that an interval can have
     int min = 2;
     int max = 12;
 
+    //assigned the number of semitones to the correct type of interval
     HashMap<Integer, String> intervalType = new HashMap<Integer, String>();
-    HashMap<Integer, String> pianoKeys = new HashMap<Integer, String>();
+
+    //list of the 4 options that the interval can be
     ArrayList<String> answers = new ArrayList<String>();
 
-    String[] ansArr = new String[4];
-
+    //buttons to select the answer
     Button button1;
     Button button2;
     Button button3;
     Button button4;
 
-
-
+    //correct location among the buttons which has the correct answer
     int correctAnswerLocation;
 
     int numInterval;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         resultTextView = findViewById(R.id.resultText);
         nextButton = findViewById(R.id.newQuestion);
-
+        //create new question
         question();
     }
 
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         Random random = new Random();
         answers.clear();
         correctAnswerLocation = random.nextInt(4);
-        ansArr[correctAnswerLocation] = interval;
+
         for(int i = 0; i < 4; i++){
             if(i == correctAnswerLocation){
                 set.add(numInterval);
@@ -213,6 +214,6 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setVisibility(View.INVISIBLE);
         question();
     }
-    
+
 
 }
